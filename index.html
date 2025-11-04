@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Implementation Assignment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: lightblue;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .color-boxes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .box {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .boxred:hover{
+            background-color: #ff6b6b;
+        }
+        
+        .box blue:hover{
+            background-color: #4dabf7;
+        }
+
+        .box green:hover{
+            background-color: #51cf66;
+        }
+
+        .box yellow:hover{
+            background-color: #ffd43b;
+        }
+      
+        
+        .user-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        input {
+            padding: 0.8rem 1rem;
+            width: 100%;
+            max-width: 300px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #4dabf7;
+        }
+        
+        button {
+            padding: 0.8rem 1.5rem;
+            background-color: #4dabf7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        
+        button:hover {
+            background-color: #339af0;
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        
+        
+        @media (max-width: 768px) {
+            .color-boxes {
+                justify-content: center;
+            }
+            
+            .box {
+                width: 120px;
+                height: 120px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="greeting">Hello</h1>
+        </header>
+        
+        
+        
+        <div class="color-boxes">
+            <div class="box red"  data-color="red">Red</div>
+            <div class="box blue" data-color="blue">Blue</div>
+            <div class="box green" data-color="green">Green</div>
+            <div class="box yellow" data-color="yellow">Yellow</div>
+        </div>
+        
+        <div class="user-input">
+            <input type="text" id="nameInput" placeholder="Enter your name">
+            <button id="greetButton">Greet Me</button>
+        </div>
+    </div>
+
+    <script>
+        // Get DOM elements
+        const greetingElement = document.getElementById('greeting');
+        const nameInput = document.getElementById('nameInput');
+        const greetButton = document.getElementById('greetButton');
+        const boxes = document.querySelectorAll('.box');
+        
+        // Add event listener to the greet button
+        greetButton.addEventListener('click', function() {
+            const userName = nameInput.value.trim();
+            
+            if (userName) {
+                greetingElement.textContent = `Hello, ${userName}!`;
+                greetingElement.style.color = '#4dabf7';
+            } else {
+                greetingElement.textContent = 'Hello';
+                greetingElement.style.color = '#333';
+            }
+        });
+        
+        // Add event listeners to the color boxes
+        boxes.forEach(box => {
+            box.addEventListener('click', function() {
+                const color = this.getAttribute('data-color');
+                this.style.backgroundColor = color;
+                
+                setTimeout(() => {
+                    this.style.backgroundColor = '';
+                }, 10000);
+            });
+        });
+    </script>
+</body>
+</html>
